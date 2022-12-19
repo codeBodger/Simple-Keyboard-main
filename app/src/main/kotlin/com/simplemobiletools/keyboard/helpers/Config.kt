@@ -2,6 +2,7 @@ package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.DEFAULT_KEYBOARD
 import java.util.*
 
 class Config(context: Context) : BaseConfig(context) {
@@ -28,6 +29,10 @@ class Config(context: Context) : BaseConfig(context) {
     var keyboardHeightMultiplier: Int
         get() = prefs.getInt(HEIGHT_MULTIPLIER, 1)
         set(keyboardHeightMultiplier) = prefs.edit().putInt(HEIGHT_MULTIPLIER, keyboardHeightMultiplier).apply()
+
+    var keyboardLayouts: ArrayList<String>
+        get() = ArrayList(prefs.getStringSet(KEYBOARD_LAYOUTS, setOf(DEFAULT_KEYBOARD)))
+        set(keyboardLayouts) = prefs.edit().putStringSet(KEYBOARD_LAYOUTS, keyboardLayouts.toSet()).apply()
 
 
     private fun getDefaultLanguage(): Int {

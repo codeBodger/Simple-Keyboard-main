@@ -37,7 +37,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
+//        keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
+        keyboard = MyKeyboard(this, enterKeyType, keyboardMode, 0)
     }
 
     override fun onCreateInputView(): View {
@@ -122,7 +123,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                         keyboardMode = KEYBOARD_SYMBOLS
                         R.xml.keys_symbols
                     }
-                    keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+//                    keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+                    keyboard = MyKeyboard(this, enterKeyType, keyboardMode, 0)
                     keyboardView!!.setKeyboard(keyboard!!)
                 }
                 keyboardView!!.invalidateAllKeys()
@@ -144,11 +146,15 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     keyboardMode = KEYBOARD_LETTERS
                     getKeyboardLayoutXML()
                 }
-                keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+//                keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+                keyboard = MyKeyboard(this, enterKeyType, keyboardMode, 0)
                 keyboardView!!.setKeyboard(keyboard!!)
             }
             MyKeyboard.KEYCODE_EMOJI -> {
                 keyboardView?.openEmojiPalette()
+            }
+            MyKeyboard.KEYCODE_KEYBOARD_CHANGE -> {
+                config.keyboardLanguage += 1
             }
             else -> {
                 var codeChar = code.toChar()
@@ -183,7 +189,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onActionUp() {
         if (switchToLetters) {
             keyboardMode = KEYBOARD_LETTERS
-            keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
+//            keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
+            keyboard = MyKeyboard(this, enterKeyType, keyboardMode, 0)
 
             val editorInfo = currentInputEditorInfo
             if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
@@ -227,7 +234,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        return MyKeyboard(this, keyboardXml, enterKeyType)
+//        return MyKeyboard(this, keyboardXml, enterKeyType)
+        return MyKeyboard(this, enterKeyType, keyboardMode, 0)
     }
 
     override fun onUpdateSelection(oldSelStart: Int, oldSelEnd: Int, newSelStart: Int, newSelEnd: Int, candidatesStart: Int, candidatesEnd: Int) {
